@@ -1,0 +1,241 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  background-color: #F5F7FA;
+  overflow: hidden;
+}
+
+.container {}
+
+header {
+  background: var(
+    --Gradient-Background,
+    linear-gradient(180deg, #41ff5e 0%, #2af598 0.01%, #08eac1 100%)
+  );
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+header .avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 64px;
+}
+
+header .username {
+  font-weight: 700;
+  font-size: 18px;
+  color: #3c3c3c;
+  margin-left: 8px;
+}
+
+main {
+  padding: 20px 28px;
+  overflow-y: auto;
+  height: calc(100vh - 80px);
+}
+
+main &::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+
+main &::-webkit-scrollbar-thumb {
+  background: rgb(166, 166, 166);
+  border-radius: 4px;
+}
+
+main &::-webkit-scrollbar-button {
+  height: 0;
+  width: 0;
+}
+
+main &::-webkit-scrollbar-track {
+  background: rgb(231, 231, 231);
+  border: 9px #fff;
+  border-radius: 4px;
+  margin: 6px 0;
+}
+
+main &::-webkit-scrollbar-corner {
+  background: 0 0;
+}
+
+main > .highlight {
+  margin-bottom: 30px;
+}
+
+main .list-suggestions {
+  list-style: none;
+  display: inline-flex;
+  flex-wrap: wrap;
+}
+
+main .item-suggestion {
+  margin-left: 4px;
+  margin-bottom: 4px;
+}
+
+main .suggestion {
+  background: #dfebfd;
+  border: none;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+main .messages {
+  margin-bottom: 80px;
+}
+
+main .messages .time-chip {
+  display: inline-flex;
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+
+main .messages .time-chip .time-date {
+  background-color: #dfebfd;
+  border-radius: 8px;
+  padding: 4px 10px;
+}
+
+main .messages .time-chip .time-date .time-text {
+  color: #4d4d4d;
+  font-family: Roboto;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
+}
+
+main .messages .message-item {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+main .received {
+  justify-content: flex-start !important;
+}
+
+main .received .message-conversation {
+  background: #dfebfd !important;
+}
+
+main .received .message-conversation .message-text {
+  text-align: left !important;
+}
+
+main .received .message-conversation .message-date {
+  text-align: left !important;
+}
+
+main .messages .message-item .message-conversation {
+  border-radius: 8px;
+  background: #a9ffb7;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+main .messages .message-item .message-conversation .message-text {
+  color: #000;
+  text-align: right;
+  font-family: Roboto;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+main .messages .message-item .message-conversation .message-date {
+  color: #4d4d4d;
+  text-align: right;
+  font-family: Roboto;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
+  margin-top: 12px;
+}
+
+
+main .messages .message-item-ia {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+main .messages .message-item-ia .message-conversation {
+  border-radius: 8px;
+  background: #dfebfd;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+main .messages .message-item-ia .message-conversation .message-text {
+  color: #000;
+  text-align: right;
+  font-family: Roboto;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+main .messages .message-item-ia .message-conversation .message-date {
+  color: #4d4d4d;
+  text-align: right;
+  font-family: Roboto;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
+  margin-top: 12px;
+}
+
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: calc(100% - 56px);
+  box-shadow: 0px 1px 5px 0px rgba(171, 190, 209, 0.6);
+  background-color: #fff;
+  padding: 0 28px;
+  display: flex;
+  height: 50px;
+}
+
+footer .text-message {
+  width: 100%;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    color: #a8a8a8;
+    font-family: Roboto;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    outline: none;
+}
+
+footer .action-message {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0 0 0 14px;
+  cursor: pointer;
+}

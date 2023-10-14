@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<head>
+  <title>Pusher Test</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div id="app">
+    <header>
+      <img class="avatar" src="./logo.jpg" alt="">
+      <h1 class="username">
+        AI Agro Amazônico
+      </h1>
+    </header>
+    <main>
+      <div class="highlight">
+        <ul class="list-suggestions">
+          <li class="item-suggestion">
+            <button class="suggestion"  v-on:click="sendHighlight('Como fazer a minha colheita?')">
+              Como fazer a minha colheita?
+            </button>
+          </li>
+          <li class="item-suggestion">
+            <button class="suggestion"  v-on:click="sendHighlight('O que é o ABC+?')">
+              O que é o ABC+?
+            </button>
+          </li>
+          <li class="item-suggestion">
+            <button class="suggestion"  v-on:click="sendHighlight('Estou em busca de um financiamento através do ABC+')">
+              Estou em busca de um financiamento através do ABC+
+            </button>
+          </li>
+        </ul>
+      </div>
+      <div class="messages">
+        <div class="time-chip" v-if="messages.length">
+          <div class="time-date">
+            <p class="time-text">{{ now }}</p>
+          </div>
+        </div>
+
+        <div class="message-item" v-for="message in messages" :class="{ received: message.received }">
+          <div class="message-conversation">
+            <p class="message-text">
+              {{ message.result }}
+            </p>
+            <span class="message-date">
+              {{ message.created_at }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="message-send">
+      <input type="text" class="text-message" placeholder="Digite aqui..." v-on:keyup.enter="send" v-model="message">
+      <button class="action-message" v-on:click="send">
+        <svg
+          width="21"
+          height="21"
+          viewBox="0 0 21 21"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g id="Send">
+            <path
+              id="Rectangle 74"
+              d="M17.7232 1.75895C18.6613 1.44624 19.5538 2.33873 19.2411 3.27684L14.1845 18.4467C13.8561 19.4318 12.5163 19.5631 12.0029 18.6603L8.9078 13.2172C8.64089 12.7478 8.25223 12.3591 7.78283 12.0922L2.33973 8.99712C1.437 8.4838 1.56824 7.14394 2.55342 6.81555L17.7232 1.75895Z"
+              stroke="black"
+              strokeWidth="1.5"
+            />
+            <path
+              id="Line"
+              d="M10.7857 10.2144L8.78574 12.2144"
+              stroke="black"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </g>
+        </svg>
+      </button>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    let amazonicoDate = new Date();
+    let day = amazonicoDate.getDate();
+    let month = amazonicoDate.getMonth();
+    let year = amazonicoDate.getFullYear();
+
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('12bc68cbfcbaac4190fd', {
+      cluster: 'us2'
+    });
+
+    var channel = pusher.subscribe('channel-1');
+
+    channel.bind('message', function(data) {
+      app.messages.push(data);
+    });
+
+    const app = new Vue({
+      el: '#app',
+      data: {
+        enterprise: "",
+        now: `${day}/${month}/${year}`,
+        typing: false,
+        message: '',
+        messages: [],
+      },
+      created: function(){
+        setTimeout(() => {
+          this.messages.push({ result: "Oi, eu sou a inteligência Agro Amazônico. Qual é a sua dúvida?", created_at: `${day}/${month}/${year}`, received: true  })
+        }, 1000)
+      },
+      methods: {
+        send: function () {
+          if(this.message.length){
+            this.messages.push({ result: this.message, created_at: `${day}/${month}/${year}`, received: false  })
+            this.message = "";
+
+            axios.post('http://localhost:3000/messages', {
+              chatId: "038a2475-68d2-47f4-88d3-467da4a2a42a",
+              message: this.message,
+            }).then(res => {
+              this.message = "";
+              this.messages.push({ result: this.message, created_at: `${day}/${month}/${year}`, received: false  })
+            }).catch(err => {
+              this.message = "";
+            })
+          }
+        },
+        sendHighlight: function(message){
+          this.messages.push({ result: message, created_at: `${day}/${month}/${year}`, received: false  })
+          this.message = "";
+
+          axios.post('http://localhost:3000/messages', {
+            chatId: "038a2475-68d2-47f4-88d3-467da4a2a42a",
+            message: this.message,
+          }).then(res => {
+            this.message = "";
+            this.messages.push({ result: this.message, created_at: `${day}/${month}/${year}`, received: false  })
+          }).catch(err => {
+            this.message = "";
+          })
+        }
+      }
+  });
+
+  </script>
+</body>
